@@ -7,24 +7,24 @@ def show_main(request):
 
     product = [
         {
-            "name": "Apple",
+            "name": "Cake Chocolate",
             "price": 100,
-            "description": "This is an apple",
-            "image": "images/apple.jpg",
+            "description": "A delightfully squishy cake-shaped toy that's as soft as it is sweet.",
+            "image": "cake.jpg",
             "quantity": 10
         },
         {
-            "name": "Banana",
+            "name": "Banana Squish",
             "price": 200,
-            "description": "This is a banana",
-            "image": "images/banana.jpg",
+            "description": "Go bananas for this fruity squishy!",
+            "image": "/banana.jpg",
             "quantity": 20
         },
         {
-            "name": "Cherry",
+            "name": "Cherry Squeezy",
             "price": 300,
-            "description": "This is a cherry",
-            "image": "images/cherry.jpg",
+            "description": "A cherry-licious squishy",
+            "image": "cherry.jpg",
             "quantity": 30
         }
     ]
