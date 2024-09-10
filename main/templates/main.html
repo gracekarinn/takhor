@@ -1,16 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ shop }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @tailwind base;
-      @tailwind components;
-      @tailwind utilities;
-    </style>
   </head>
-  <main>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  </main>
+  <body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    {% load static %} {% include 'components/navbar.html' %}
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <header class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold mb-4 text-blue-400">
+          Welcome to {{ shop }}
+        </h1>
+        <p class="text-xl text-gray-300 mb-2">Your everyday stress reliever</p>
+        <div class="text-gray-400">
+          <p>{{ name }} | NPM: {{ NPM }} | Class: {{ class }}</p>
+        </div>
+      </header>
+
+      <section>
+        <h2 class="text-3xl font-bold mb-8 text-center text-purple-400">
+          Featured Products
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {% for item in product %}
+          <div
+            class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
+          >
+            <img
+              src="{% static item.image %}"
+              alt="{{ item.name }}"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-blue-300">
+                {{ item.name }}
+              </h3>
+              <p class="text-gray-400 mb-4">{{ item.description }}</p>
+              <div class="flex justify-between items-center">
+                <span class="text-lg font-semibold text-purple-300"
+                  >${{ item.price }}</span
+                >
+                <span
+                  class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm"
+                  >Qty: {{ item.quantity }}</span
+                >
+              </div>
+              <button
+                class="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+
+    {% include 'components/footer.html' %}
+  </body>
 </html>
