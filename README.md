@@ -1,4 +1,4 @@
-Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.# **🚀TAKHOR🚀**
+# **🚀TAKHOR🚀**
 At **Takhor**, we specialize in bringing joy to your daily life with our unique, high-quality squishies. Whether you're looking for a fun stress reliever or a cute addition to your collection, we've got you covered!
 
 ### Why Choose Takhor?
