@@ -29,7 +29,7 @@ Check our website [here](www.google.com) <br />
   Menambah Model sesuai dengan atribut yang diinginkan di ```models.py```. Setiap field memiliki tipe data yang sesuai seperti ```CharField```, ```DateField```, ```IntegerField```, dan ```TextField```.
   Kemudian, jangan lupa untuk memigrasikan model agar setiap perubahan dapat dilacak.
 * **Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.** <br />
-  Di dalam views fungsi yang mengambil parameter request dan mengembalikan ```request``, ```"[file].html"```, ```context```. Hal ini untuk mengembalikan tampilan yang diinginkan pengguna
+  Di dalam views fungsi yang mengambil parameter request dan mengembalikan ```request``, ```"file_kalian.html"```, ```context```. Hal ini untuk mengembalikan tampilan yang diinginkan pengguna
 * **Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py.** <br />
   Membuat file ```urls.py``` di  ```main``` dan menambahkan url yang diinginkan. File ini berfungsi untuk menentukan rute URL (URL routing) yang menghubungkan URL yang diminta pengguna dengan fungsi atau tampilan (view) yang akan diproses oleh Django.
 * **Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.** <br />
