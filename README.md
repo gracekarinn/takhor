@@ -9,7 +9,9 @@ At **Takhor**, we specialize in bringing joy to your daily life with our unique,
 - **Affordable Prices**: Get the best deals for premium squishies.
 
 Curious?🤔 <br />
-Check our website [here](www.google.com) <br />
+Check our website [here](https://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
+Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
+
 
 ## **Tugas 2 PBP 2024/2025**
 
@@ -31,7 +33,7 @@ Check our website [here](www.google.com) <br />
   Menambah Model sesuai dengan atribut yang diinginkan di `models.py`. Setiap field memiliki tipe data yang sesuai seperti `CharField`, `DateField`, `IntegerField`, dan `TextField`.
   Kemudian, jangan lupa untuk memigrasikan model agar setiap perubahan dapat dilacak.
 - **Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.** <br />
-  Di dalam views fungsi yang mengambil parameter request dan mengembalikan `request`, `"file_kalian.html"`, `context`. Hal ini untuk mengembalikan tampilan yang diinginkan pengguna
+  Di dalam views, fungsi mengambil parameter request dan mengembalikan `request`, `"file_kalian.html"`, `context`. Hal ini untuk mengembalikan tampilan yang diinginkan pengguna
 - **Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py.** <br />
   Membuat file `urls.py` di `main` dan menambahkan url yang diinginkan. File ini berfungsi untuk menentukan rute URL (URL routing) yang menghubungkan URL yang diminta pengguna dengan fungsi atau tampilan (view) yang akan diproses oleh Django.
 - **Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.** <br />
@@ -47,9 +49,9 @@ Alur permintaan pada aplikasi web Django dimulai saat klien mengirim permintaan 
 
 &nbsp;&nbsp;&nbsp;**Fungsi git:**
 
-- Git memungkinkan developer untuk melacak perubahan kode secara berkelanjutan. Setiap perubahan yang dilakukan dapat disimpan sebagai versi baru tanpa menghapus versi
+- Git memungkinkan pengguna untuk melacak perubahan kode secara berkelanjutan. Setiap perubahan yang dilakukan dapat disimpan sebagai versi baru tanpa menghapus versi
   sebelumnya.
-- Git mendukung kolaborasi antara banyak developer. Fitur branching (percabangan) memungkinkan tim bekerja pada berbagai fitur atau perbaikan bug secara bersamaan tanpa
+- Git mendukung kolaborasi antara banyak pengguna. Fitur branching (percabangan) memungkinkan tim bekerja pada berbagai fitur atau perbaikan bug secara bersamaan tanpa
   mengganggu kerja orang lain.
 - Git dapat dijadikan backup
 - Git mempermudah untuk menerima kontribusi dari luar melalui pull request dan forking, sekaligus memberikan kendali penuh pada pemilik proyek untuk memilih apa yang akan
