@@ -9,8 +9,14 @@ At **Takhor**, we specialize in bringing joy to your daily life with our unique,
 - **Affordable Prices**: Get the best deals for premium squishies.
 
 Curious?🤔 <br />
+<<<<<<< HEAD
 Check our website [here](http://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
 Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
+=======
+Check our website [here](https://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
+Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
+
+>>>>>>> 03caf18 (Update README.md)
 
 ## **Tugas 2 PBP 2024/2025**
 
