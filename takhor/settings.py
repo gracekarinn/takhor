@@ -125,14 +125,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-<<<<<<< HEAD
-
+ 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "grace-karina31-takhor.pbp.cs.ui.ac.id"]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://grace-karina31-takhor.pbp.cs.ui.ac.id", "https://grace-karina31-takhor.pbp.cs.ui.ac.id>"]
-=======
-...
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "grace-karina-31-takhor.pbp.cs.ui.ac.id"]
-...
->>>>>>> 74c76a3 (chore: Add new allowed host for deployment)
