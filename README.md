@@ -97,16 +97,24 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 
 ### Membuat form
 
+<<<<<<< HEAD
 **Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
 
+=======
+**Langkah 1: Membuat file ``forms.py`` yang berisi model dari form berisi dengan fields yang lengkap** <br />
+>>>>>>> 8de7ea3 (Update README.md)
 ```python
 class ProductForm(ModelForm):
     class Meta:
         model = ProductakhorModel
         fields = ['name', 'price', 'description', 'image', 'quantity']
 ```
+<<<<<<< HEAD
 
 **Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
+=======
+**Langkah 2: Di dalam ``views.py`` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
+>>>>>>> 8de7ea3 (Update README.md)
 
 ```python
 def create_product_entry(request):
@@ -131,7 +139,10 @@ urlpatterns = [
 ```
 
 ### Membuat format XML dan JSON
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8de7ea3 (Update README.md)
 **Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
 
 ```python
@@ -156,7 +167,11 @@ def show_json_by_id(request, id):
     return HttpResponse(data, content_type='application/json')
 ```
 
+<<<<<<< HEAD
 **Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam `urls.py`.**
+=======
+**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam ``urls.py``.**
+>>>>>>> 8de7ea3 (Update README.md)
 
 ```python
 urlpatterns = [
@@ -164,6 +179,7 @@ urlpatterns = [
     path('create/', create_product_entry, name='create_product_entry'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
+<<<<<<< HEAD
     path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 ]
@@ -182,3 +198,9 @@ urlpatterns = [
 
 **Hasil dari XML by ID**
 ![XML by ID](/image-readme/xml-by-id.png)
+=======
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+]
+```
+>>>>>>> 8de7ea3 (Update README.md)
