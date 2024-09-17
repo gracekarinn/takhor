@@ -86,4 +86,73 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 
 **5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)** <br/>
 
-[TODO]
+### Membuat form
+
+**Langkah 1: Membuat file ``forms.py`` yang berisi model dari form berisi dengan fields yang lengkap** <br />
+```python
+class ProductForm(ModelForm):
+    class Meta:
+        model = ProductakhorModel
+        fields = ['name', 'price', 'description', 'image', 'quantity']
+```
+**Langkah 2: Di dalam ``views.py`` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
+
+```python
+def create_product_entry(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_main')
+    else:
+        form = ProductForm()
+    context = {'form': form}
+    return render(request, 'create_product_entry.html', context)
+```
+
+**Langkah 3: Membuat template HTML untuk menampilkan form dan menambahkan di url**
+
+```python
+urlpatterns = [
+    path('', show_main, name='show_main'),
+    path('create/', create_product_entry, name='create_product_entry'),
+]
+```
+
+### Membuat format XML dan JSON
+**Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
+
+```python
+def show_xml(request):
+    product_entries = ProductakhorModel.objects.all()
+    data = serializers.serialize('xml', product_entries)
+    return HttpResponse(data, content_type='application/xml')
+
+def show_json(request):
+    product_entries = ProductakhorModel.objects.all()
+    data = serializers.serialize('json', product_entries)
+    return HttpResponse(data, content_type='application/json')
+
+def show_xml_by_id(request, id):
+    product_entries = ProductakhorModel.objects.get(id=id)
+    data = serializers.serialize('xml', [product_entries])
+    return HttpResponse(data, content_type='application/xml')
+
+def show_json_by_id(request, id):
+    product_entries = ProductakhorModel.objects.get(id=id)
+    data = serializers.serialize('json', [product_entries])
+    return HttpResponse(data, content_type='application/json')
+```
+
+**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam ``urls.py``.**
+
+```python
+urlpatterns = [
+    path('', show_main, name='show_main'),
+    path('create/', create_product_entry, name='create_product_entry'),
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+]
+```
