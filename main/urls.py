@@ -10,8 +10,14 @@ urlpatterns = [
     path('create/', create_product_entry, name='create_product_entry'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
+<<<<<<< HEAD
     path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+=======
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+
+>>>>>>> 39772c8 (feat: Add new URL patterns for creating and displaying products)
 ]
 
 if settings.DEBUG:
