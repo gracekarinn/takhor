@@ -9,22 +9,8 @@ At **Takhor**, we specialize in bringing joy to your daily life with our unique,
 - **Affordable Prices**: Get the best deals for premium squishies.
 
 Curious?🤔 <br />
-<<<<<<< HEAD
-<<<<<<< HEAD
 Check our website [here](http://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
-Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
-=======
-Check our website [here](https://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
-=======
-Check our website [here](http://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
->>>>>>> afb2daa (Update README.md)
-Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
 
-<<<<<<< HEAD
->>>>>>> 03caf18 (Update README.md)
-
-=======
->>>>>>> 9b598cc (image for readme)
 ## **Tugas 2 PBP 2024/2025**
 
 **Nama**: Grace Karina <br />
@@ -100,34 +86,16 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 
 ### Membuat form
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
 
-=======
-**Langkah 1: Membuat file ``forms.py`` yang berisi model dari form berisi dengan fields yang lengkap** <br />
->>>>>>> 8de7ea3 (Update README.md)
-=======
-**Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
-
->>>>>>> 9b598cc (image for readme)
 ```python
 class ProductForm(ModelForm):
     class Meta:
         model = ProductakhorModel
         fields = ['name', 'price', 'description', 'image', 'quantity']
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
-=======
-**Langkah 2: Di dalam ``views.py`` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
->>>>>>> 8de7ea3 (Update README.md)
-=======
-
-**Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
->>>>>>> 9b598cc (image for readme)
 
 ```python
 def create_product_entry(request):
@@ -152,14 +120,7 @@ urlpatterns = [
 ```
 
 ### Membuat format XML dan JSON
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 8de7ea3 (Update README.md)
-=======
-
->>>>>>> 9b598cc (image for readme)
 **Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
 
 ```python
@@ -184,15 +145,7 @@ def show_json_by_id(request, id):
     return HttpResponse(data, content_type='application/json')
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam `urls.py`.**
-=======
-**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam ``urls.py``.**
->>>>>>> 8de7ea3 (Update README.md)
-=======
-**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam `urls.py`.**
->>>>>>> 9b598cc (image for readme)
 
 ```python
 urlpatterns = [
@@ -200,8 +153,6 @@ urlpatterns = [
     path('create/', create_product_entry, name='create_product_entry'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
-<<<<<<< HEAD
-<<<<<<< HEAD
     path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 ]
@@ -220,21 +171,3 @@ urlpatterns = [
 
 **Hasil dari XML by ID**
 ![XML by ID](/image-readme/xml-by-id.png)
-<<<<<<< HEAD
-=======
-    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
-    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
-]
-```
->>>>>>> 8de7ea3 (Update README.md)
-=======
-    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
-    path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
-]
-```
-
-## Hasil akses URL pada Postman
-
->>>>>>> 98ebd2e (Update README.md)
-=======
->>>>>>> fda7fa3 (Refactor image paths in README.md)
