@@ -180,6 +180,7 @@ urlpatterns = [
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
 <<<<<<< HEAD
+<<<<<<< HEAD
     path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 ]
@@ -204,3 +205,12 @@ urlpatterns = [
 ]
 ```
 >>>>>>> 8de7ea3 (Update README.md)
+=======
+    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+]
+```
+
+## Hasil akses URL pada Postman
+
+>>>>>>> 98ebd2e (Update README.md)
