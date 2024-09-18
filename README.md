@@ -12,7 +12,6 @@ Curious?🤔 <br />
 Check our website [here](http://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
 Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not working]
 
-
 ## **Tugas 2 PBP 2024/2025**
 
 **Nama**: Grace Karina <br />
@@ -41,7 +40,7 @@ Last updated deployment link: Rabu, 11 September 2024 (10.18) [Status: not worki
   Pada settings.py di proyek Django yang sudah dibuat tadi, tambahkan URL deployment PWS pada `ALLOWED_HOSTS`. Kemudiaan isi credentials yang sudah diberikan.
 
 **2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.**
-![Bagan](/bagan.png)
+![Bagan](/image-readme/bagan.png)
 
 Alur permintaan pada aplikasi web Django dimulai saat klien mengirim permintaan HTTP ke server. `urls.py` menerima permintaan dan mengarahkannya ke fungsi yang sesuai di `views.py`. Views memproses permintaan dan bekerja dengan `models.py` jika perlu untuk read/write data. Setelah pemrosesan, view merender template HTML dengan data yang telah diolah. Hasilnya dikembalikan sebagai respons HTTP ke klien melalui server Django.
 
@@ -74,13 +73,13 @@ Data delivery diperlukan untuk memastikan pengelolaan dan distribusi data yang e
 
 **2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?** <br/>
 
-JSON (JavaScript Object Notation) lebih baik dibandingkan XML karena lebih sederhana, mudah dibaca, dan lebih efisien dalam hal ukuran data. JSON memiliki struktur yang lebih ringkas dan dapat diintegrasikan langsung dengan JavaScript, menjadikannya ideal untuk diaplikasikan. Selain itu, JSON lebih cepat dalam parsing dan pengiriman data karena tidak membutuhkan tag pembuka dan penutup seperti XML. Walaupun begitu, XML masih bermanfaat dalam data yang lebih kompleks, seperti file konfigurasi dan format yang lebih formal (misalnya, RSS feeds atau SVG). 
+JSON (JavaScript Object Notation) lebih baik dibandingkan XML karena lebih sederhana, mudah dibaca, dan lebih efisien dalam hal ukuran data. JSON memiliki struktur yang lebih ringkas dan dapat diintegrasikan langsung dengan JavaScript, menjadikannya ideal untuk diaplikasikan. Selain itu, JSON lebih cepat dalam parsing dan pengiriman data karena tidak membutuhkan tag pembuka dan penutup seperti XML. Walaupun begitu, XML masih bermanfaat dalam data yang lebih kompleks, seperti file konfigurasi dan format yang lebih formal (misalnya, RSS feeds atau SVG).
 
 **3. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?** <br/>
 
 Method `is_valid()` pada form Django berfungsi untuk memvalidasi data yang dikirimkan melalui form. Ketika method ini dipanggil, Django akan memeriksa apakah data yang dimasukkan sesuai dengan aturan validasi yang telah didefinisikan dalam form, seperti tipe data yang benar atau batasan karakter. Jika data valid, `is_valid()` akan mengembalikan nilai `True`, dan data bersih yang sudah divalidasi akan tersedia di atribut `cleaned_data`. Jika tidak valid, method ini mengembalikan `False` dan menyediakan pesan kesalahan.
 
-**4.  Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?** <br/>
+**4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?** <br/>
 
 Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplikasi dari **serangan Cross-Site Request Forgery (CSRF)**. CSRF adalah jenis serangan di mana penyerang dapat membuat permintaan tak sah atas nama pengguna yang sah tanpa sepengetahuannya. Dengan menambahkan `csrf_token` pada form, Django memastikan bahwa setiap permintaan POST berasal dari sumber yang sah (pengguna yang valid) karena token unik ini hanya diketahui oleh server dan pengguna.
 
@@ -88,14 +87,16 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 
 ### Membuat form
 
-**Langkah 1: Membuat file ``forms.py`` yang berisi model dari form berisi dengan fields yang lengkap** <br />
+**Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
+
 ```python
 class ProductForm(ModelForm):
     class Meta:
         model = ProductakhorModel
         fields = ['name', 'price', 'description', 'image', 'quantity']
 ```
-**Langkah 2: Di dalam ``views.py`` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
+
+**Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
 
 ```python
 def create_product_entry(request):
@@ -120,6 +121,7 @@ urlpatterns = [
 ```
 
 ### Membuat format XML dan JSON
+
 **Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
 
 ```python
@@ -144,7 +146,7 @@ def show_json_by_id(request, id):
     return HttpResponse(data, content_type='application/json')
 ```
 
-**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam ``urls.py``.**
+**Langkah 2: Membuat Routing URL untuk views dalam format JSON dan XML ke dalam `urls.py`.**
 
 ```python
 urlpatterns = [
