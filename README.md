@@ -92,8 +92,6 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 =======
 **Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
 
-> > > > > > > 8de7ea3 (Update README.md)
-
 ```python
 class ProductForm(ModelForm):
     class Meta:
@@ -133,12 +131,7 @@ urlpatterns = [
 
 ### Membuat format XML dan JSON
 
-<<<<<<< HEAD
-
-=======
-
-> > > > > > > 8de7ea3 (Update README.md)
-> > > > > > > **Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
+**Langkah 1: Membuat view untuk XML, JSON, XML by ID, dan JSON by ID**
 
 ```python
 def show_xml(request):
