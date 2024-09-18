@@ -220,6 +220,7 @@ urlpatterns = [
 
 **Hasil dari XML by ID**
 ![XML by ID](/image-readme/xml-by-id.png)
+<<<<<<< HEAD
 =======
     path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
@@ -235,3 +236,5 @@ urlpatterns = [
 ## Hasil akses URL pada Postman
 
 >>>>>>> 98ebd2e (Update README.md)
+=======
+>>>>>>> fda7fa3 (Refactor image paths in README.md)
