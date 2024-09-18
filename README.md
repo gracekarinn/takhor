@@ -86,10 +86,6 @@ Kita membutuhkan `csrf_token` saat membuat form di Django untuk melindungi aplik
 
 ### Membuat form
 
-<<<<<<< HEAD
-**Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
-
-=======
 **Langkah 1: Membuat file `forms.py` yang berisi model dari form berisi dengan fields yang lengkap** <br />
 
 ```python
@@ -99,13 +95,7 @@ class ProductForm(ModelForm):
         fields = ['name', 'price', 'description', 'image', 'quantity']
 ```
 
-<<<<<<< HEAD
-
-# **Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
-
 **Langkah 2: Di dalam `views.py` di direktori main, kita membuat fungsi create_product entry dan menambah import yang diperlukan. Kita menambahkan files karena kita mempunyai fitur image yang akan ditampilkan di website nanti** <br/>
-
-> > > > > > > 8de7ea3 (Update README.md)
 
 ```python
 def create_product_entry(request):
