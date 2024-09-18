@@ -161,3 +161,14 @@ urlpatterns = [
 
 ## Hasil akses URL pada Postman
 
+**Hasil dari JSON**
+![json](/image-readme/json.png)
+
+**Hasil dari XML**
+![xml](/image-readme/xml.png)
+
+**Hasil dari JSON by ID**
+![json by ID](/image-readme/json-by-id.png)
+
+**Hasil dari XML by ID**
+![XML by ID](/image-readme/xml-by-id.png)
