@@ -11,6 +11,7 @@ urlpatterns = [
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
 <<<<<<< HEAD
+<<<<<<< HEAD
     path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 =======
@@ -18,6 +19,10 @@ urlpatterns = [
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 
 >>>>>>> 39772c8 (feat: Add new URL patterns for creating and displaying products)
+=======
+    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+>>>>>>> 3c36296 (Refactor URL patterns to use string instead of integer for id parameter)
 ]
 
 if settings.DEBUG:
