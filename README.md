@@ -171,3 +171,17 @@ urlpatterns = [
 
 **Hasil dari XML by ID**
 ![XML by ID](/image-readme/xml-by-id.png)
+
+
+## **Tugas 4 PBP 2024/2025**
+
+**1. Apa perbedaan antara ```HttpResponseRedirect()``` dan ```redirect()```?** <br/>
+
+```HttpResponseRedirect()``` dan ```redirect()``` keduanya digunakan dalam Django untuk mengarahkan pengguna ke URL lain, tetapi ada beberapa perbedaan dalam pemakaiannya. ```HttpResponseRedirect()``` adalah kelas yang secara langsung membuat respons HTTP yang mengarahkan pengguna ke URL yang ditentukan dan pengguna harus secara manual memberikan URL tersebut dalam bentuk string. Sebaliknya, ```redirect()``` adalah fungsi yang lebih fleksibel karena secara otomatis menangani berbagai jenis input, seperti nama URL (dari file   ```urls.py```), objek model, atau URL string biasa. 
+
+**2. Jelaskan cara kerja penghubungan model ```Product``` dengan ```User```!** <br/>
+
+
+
+
+
