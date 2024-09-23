@@ -181,6 +181,99 @@ urlpatterns = [
 
 **2. Jelaskan cara kerja penghubungan model ```Product``` dengan ```User```!** <br/>
 
+Untuk menghubungkan model ```Product``` dengan model ```User``` di Django, kita menggunakan relasi **ForeignKey** atau **ManyToManyField**, tergantung pada hubungan yang ingin kita buat. Jika setiap produk hanya dimiliki oleh satu pengguna (misalnya, pemilik produk), kita menggunakan **ForeignKey**, yang akan menambahkan kolom pada tabel `Product` untuk menyimpan referensi ke `User`. Sebaliknya, jika produk dapat dimiliki oleh banyak pengguna (seperti pembeli atau pelanggan) dan pengguna bisa memiliki banyak produk, kita menggunakan **ManyToManyField**, yang secara otomatis membuat tabel relasi terpisah untuk mengelola hubungan banyak-ke-banyak. Django memudahkan penghubungan antar model ini, sehingga kita bisa mengakses semua produk milik pengguna dengan query seperti ```user.product_set.all()``` atau mengambil pemilik dari produk tertentu dengan ```product.user```. 
+
+
+**3. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?** <br/>
+
+Django mengingat pengguna yang telah login melalui mekanisme **sessions** yang menggunakan **cookies**. Ketika pengguna login, Django menyimpan data sesi (termasuk informasi tentang pengguna yang telah diautentikasi) di server dan mengirimkan **cookie sesi** ke browser pengguna. Cookie ini berisi kunci unik (session ID) yang menghubungkan pengguna ke data sesi yang tersimpan di server. Setiap kali pengguna melakukan permintaan ke server, cookie ini dikirim kembali ke server untuk memastikan bahwa pengguna yang sama terus dikenali hingga mereka logout.
+
+Selain untuk login, cookies digunakan untuk berbagai tujuan lain, seperti **melacak preferensi pengguna**, **mengelola keranjang belanja** dalam aplikasi e-commerce, dan **mengumpulkan data analitik** untuk mengetahui perilaku pengguna. Cookies juga bisa digunakan untuk **menyimpan pengaturan** yang dipersonalisasi, seperti tema atau bahasa yang dipilih pengguna.
+
+Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dapat diambil dan dibaca oleh pihak ketiga (misalnya melalui serangan man-in-the-middle). Ada juga **cookies pihak ketiga**, yang sering digunakan untuk tujuan iklan atau pelacakan lintas situs, dan ini dapat menimbulkan kekhawatiran terkait privasi. Untuk memastikan keamanan, cookie harus diatur dengan opsi seperti **HttpOnly** (hanya bisa diakses oleh server, bukan JavaScript), **Secure** (hanya dikirimkan melalui koneksi HTTPS), dan **SameSite** (mencegah pengiriman cookie lintas situs yang tidak diinginkan).
+
+**4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).** <br/>
+
+**1. Membuat Fungsi dan Form Registrasi**
+
+- Pada ```views.py```, tambahkan import ```UserCreationForm``` dan ```messages```. ```UserCreationForm``` adalah impor formulir bawaan yang memudahkan pembuatan formulir pendaftaran pengguna tanpa menulis kode dari awal.
+- Tambahkan fungsi register pada ```views.py```
+  ```python
+  def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+  ```
+
+- Buat template ```register.html``` untuk menampilkan form
+- Kemudian, jangan lupa untuk menambahkan di ```urls.py```
+  ```python
+   urlpatterns = [
+     ...
+     path('register/', register, name='register'),]
+   ```
+
+**2. Membuat Fungsi dan Form Login**
+
+- Buka kembali ```views.py``` yang ada pada subdirektori main. Tambahkan import ```authenticate```, ```login```, dan ```AuthenticationForm``` pada bagian paling atas.
+- Tambahkan fungsi ```login-user``` di```views.py```
+  ```python
+    def login_user(request):
+       if request.method == 'POST':
+          form = AuthenticationForm(data=request.POST)
+    
+          if form.is_valid():
+                user = form.get_user()
+                login(request, user)
+                return redirect('main:show_main')
+    
+       else:
+          form = AuthenticationForm(request)
+       context = {'form': form}
+       return render(request, 'login.html', context)
+    ```
+- Buat template ```login.html``` untuk menampilkan form
+- Kemudian, jangan lupa untuk menambahkan di ```urls.py```
+  ```python
+  urlpatterns = [
+    ...
+    path('login/', login_user, name='login'),]
+  ```
+
+**3. Membuat Fungsi logout**
+
+- Buka kembali ```views.py``` yang ada pada subdirektori main. Tambahkan import ```logout``` ini pada bagian paling atas.
+- Tambahkan fungsi di bawah ini ke dalam fungsi ```views.py```
+  ```python
+  def logout_user(request):
+    logout(request)
+    return redirect('main:login')
+  ```
+- Bukalah berkas ```main.html``` yang ada pada direktori ```main/templates``` dan tambahkan potongan kode
+  ```python
+    ...
+  <a href="{% url 'main:logout' %}">
+    <button>Logout</button>
+  </a>
+    ...
+  ```
+
+- Kemudian, jangan lupa untuk menambahkan di ```urls.py```
+  ```python
+  urlpatterns = [
+   ...
+   path('logout/', logout_user, name='logout'),]
+  ```
+
+**4. Merestriksi Akses Halaman Main**
+
 
 
 
