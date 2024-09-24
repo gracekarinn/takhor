@@ -304,7 +304,30 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
     ...
   ```
 
-**5. Menambahkan data last login dan menampilkannya ke halaman main (mengimplementasikan fungsi cookies)**
+**5. Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.**
+
+- Masuk ke Django shell: python3 manage.py shell
+- Buat dua akun pengguna dan tiga dummy data untuk masing-masing akun:
+  ```python
+  from django.contrib.auth.models import User
+  from myapp.models import ProductakhorModel
+
+
+  user1 = User.objects.create_user(username='kucing_depresi', password='sangatdepresi')
+  user2 = User.objects.create_user(username='kucing_bahagia', password='tapiboong')
+  
+  ProductakhorModel.objects.create(user=user1, name='Product 1', price=10000, description='semoga', image='images/kucing.jpg', quantity=10)
+  ProductakhorModel.objects.create(user=user1, name='Product 2', price=15000, description='kita', image='images/kucing.jpg', quantity=5)
+  ProductakhorModel.objects.create(user=user1, name='Product 3', price=20000, description='bahagia selalu', image='images/kucing.jpg', quantity=8)
+  
+  ProductakhorModel.objects.create(user=user2, name='Product A', price=25000, description='saya', image='images/kucing.jpg', quantity=7)
+  ProductakhorModel.objects.create(user=user2, name='Product B', price=30000, description='suka', image='images/kucing.jpg', quantity=12)
+  ProductakhorModel.objects.create(user=user2, name='Product C', price=35000, description='chaewon', image='images/kucing.jpg', quantity=4)
+  ```
+- Kemudian, keluar dari sistem dengan cara exit()
+  
+
+**6. Menambahkan data last login dan menampilkannya ke halaman main (mengimplementasikan fungsi cookies)**
 
 - Membuka file ```views.py``` dan menambahkan import sesuai kode di bawah.
   ```python
@@ -334,7 +357,7 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
   ```
 - Tambahkan ```last_login``` pada html yang diinginkan
 
-**6. Menghubungkan Model dengan User**
+**7. Menghubungkan Model dengan User**
 
 - Pada ```models.py```, import ```User``` dari ```django.contrib.auth.models```
 - Kemudian, tambahkan potongan kode ini dalam kelas model
@@ -358,7 +381,6 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
 - Ubah value dari ```name``` pada context dalam ```show_main``` menjadi ``` 'name': request.user.username,```
 - Jangan lupa untuk membuat migrasi karena kita baru saja menambahkan atribut pada model.
   
-
 
 
 
