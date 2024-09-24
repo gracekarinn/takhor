@@ -336,6 +336,7 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
           form = ProductForm()
   ```
 - Ubah value dari ```name``` pada context dalam ```show_main``` menjadi ``` 'name': request.user.username,```
+- Jangan lupa untuk membuat migrasi karena kita baru saja menambahkan atribut pada model.
   
 
 
