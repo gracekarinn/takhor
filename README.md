@@ -274,6 +274,73 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
 
 **4. Merestriksi Akses Halaman Main**
 
+- import ```login_required``` pada bagian paling atas file ```views.py```
+- tambahkan decorator ```@login_required(login_url='/login')``` di atas fungsi ```show_main```
+  
+  ```python
+    ...
+    @login_required(login_url='/login')
+    def show_main(request):
+    ...
+  ```
+
+**5. Menambahkan data last login dan menampilkannya ke halaman main (mengimplementasikan fungsi cookies)**
+
+- Membuka file ```views.py``` dan menambahkan import sesuai kode di bawah.
+  ```python
+  import datetime
+  from django.http import HttpResponseRedirect
+  from django.urls import reverse
+  ```
+- Pada fungsi ```login_user```, kita akan menambahkan fungsionalitas menambahkan cookie yang bernama last_login untuk melihat kapan terakhir kali pengguna melakukan login.
+  ```python
+    ...
+    if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        response = HttpResponseRedirect(reverse("main:show_main"))
+        response.set_cookie('last_login', str(datetime.datetime.now()))
+        return response
+    ...
+  ```
+- Pada fungsi ```show_main```, tambahkan potongan kode ```'last_login': request.COOKIES['last_login']``` ke dalam variabel ```context```
+- Ubah fungsi ```logout_user`` dengan potongan kode berikut.
+  ```python
+    def logout_user(request):
+      logout(request)
+      response = HttpResponseRedirect(reverse('main:login'))
+      response.delete_cookie('last_login')
+      return response
+  ```
+- Tambahkan ```last_login`` pada ```main.html```
+
+**6. Menghubungkan Model dengan User**
+
+- Pada ```models.py```, import ```User``` dari ```django.contrib.auth.models```
+- Kemudian, tambahkan potongan kode ini dalam kelas model
+  ```python
+     user = models.ForeignKey(User, on_delete=models.CASCADE)
+      ...
+  ```
+- Buka kembali ```views.py```, kemudian tambahkan kode ini. Perbedaan takhor dengan tutorial adalah kita juga menambahkan request.FILES untuk menambahkan image.
+  ```python
+    def create_product_entry(request):
+      if request.method == "POST":
+          form = ProductForm(request.POST, request.FILES)
+          if form.is_valid():
+              product_entry = form.save(commit=False)
+              product_entry.user = request.user
+              product_entry.save()
+              return redirect('main:show_main')
+      else:
+          form = ProductForm()
+  ```
+- Ubah value dari ```name``` pada context dalam ```show_main``` menjadi ``` 'name': request.user.username,```
+  
+
+
+
+
 
 
 
