@@ -177,22 +177,42 @@ urlpatterns = [
 
 **1. Apa perbedaan antara ```HttpResponseRedirect()``` dan ```redirect()```?** <br/>
 
-```HttpResponseRedirect()``` dan ```redirect()``` keduanya digunakan dalam Django untuk mengarahkan pengguna ke URL lain, tetapi ada beberapa perbedaan dalam pemakaiannya. ```HttpResponseRedirect()``` adalah kelas yang secara langsung membuat respons HTTP yang mengarahkan pengguna ke URL yang ditentukan dan pengguna harus secara manual memberikan URL tersebut dalam bentuk string. Sebaliknya, ```redirect()``` adalah fungsi yang lebih fleksibel karena secara otomatis menangani berbagai jenis input, seperti nama URL (dari file   ```urls.py```), objek model, atau URL string biasa. 
+```HttpResponseRedirect()``` dan ```redirect()``` keduanya digunakan dalam Django untuk mengarahkan pengguna ke URL lain, tetapi ada beberapa perbedaan dalam pemakaiannya. ```HttpResponseRedirect()``` adalah kelas bawaan yang digunakan untuk mengalihkan pengguna ke URL tertentu, namun memerlukan URL lengkap sebagai argumen. Sebaliknya, ```redirect()``` adalah shortcut dari ```HttpResponseRedirect()``` karena fungsi ini dapat menerima parameter, seperti named URL, objek model, atau URL lainnya. `redirect()` akan secara otomatis menangani konversi menjadi URL sehingga lebih ringkas dan fleksibel dibandingkan ```HttpResponseRedirect()```
 
 **2. Jelaskan cara kerja penghubungan model ```Product``` dengan ```User```!** <br/>
 
-Untuk menghubungkan model ```Product``` dengan model ```User``` di Django, kita menggunakan relasi **ForeignKey** atau **ManyToManyField**, tergantung pada hubungan yang ingin kita buat. Jika setiap produk hanya dimiliki oleh satu pengguna (misalnya, pemilik produk), kita menggunakan **ForeignKey**, yang akan menambahkan kolom pada tabel `Product` untuk menyimpan referensi ke `User`. Sebaliknya, jika produk dapat dimiliki oleh banyak pengguna (seperti pembeli atau pelanggan) dan pengguna bisa memiliki banyak produk, kita menggunakan **ManyToManyField**, yang secara otomatis membuat tabel relasi terpisah untuk mengelola hubungan banyak-ke-banyak. Django memudahkan penghubungan antar model ini, sehingga kita bisa mengakses semua produk milik pengguna dengan query seperti ```user.product_set.all()``` atau mengambil pemilik dari produk tertentu dengan ```product.user```. 
+Untuk menghubungkan model ```Product``` dengan model ```User``` di Django, kita menggunakan relasi **ForeignKey** atau **ManyToManyField**, tergantung pada hubungan yang ingin kita buat. Jika setiap produk hanya dimiliki oleh satu pengguna (misalnya, pemilik produk), kita menggunakan **ForeignKey**, yang akan menambahkan kolom pada tabel `Product` untuk menyimpan referensi ke `User`. Sebaliknya, jika produk dapat dimiliki oleh banyak pengguna (seperti pembeli atau pelanggan) dan pengguna bisa memiliki banyak produk, kita menggunakan **ManyToManyField**, yang secara otomatis membuat tabel relasi terpisah untuk mengelola hubungan banyak-ke-banyak. Contoh, pemakaian dalam tutorial ini adalah
 
+```python
+from django.db import models
+from django.contrib.auth.models import User
 
-**3. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?** <br/>
+class MoodEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mood = models.CharField(max_length=50)
+    entry_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.mood}"
+```
+
+Setiap kali pengguna mengisi form suasana hati, hasil tersebut dihubungkan dengan pengguna yang sedang login. Dengan ForeignKey, hubungan many-to-one yang memungkinkan satu pengguna memiliki banyak entri. Opsi on_delete=models.CASCADE memastikan bahwa jika pengguna dihapus, semua entri suasana hati yang terkait juga akan dihapus secara otomatis.
+
+**3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.** <br/>
+
+**Authentication** adalah proses verifikasi identitas pengguna, misalnya melalui login dengan username dan password. Auth memastikan bahwa pengguna yang mengakses sistem adalah beneran. Setelah pengguna terautentikasi, auth menentukan hak akses pengguna tersebut, yaitu apa yang boleh dan tidak boleh mereka lakukan dalam sistem. Authorization mengontrol akses ke fitur berdasarkan peran atau izin yang dimiliki pengguna.
+
+Dalam Django, auth dilakukan dengan menggunakan sistem auth bawaan, seperti ```User``` model dan middleware. Django menyediakan fungsionalitas login yang memvalidasi kredensial pengguna. Setelah pengguna berhasil login, Django menyimpan informasi sesi pengguna untuk mengingat status login mereka. Auth kemudian dikelola dengan permissions dan grup yang dapat ditentukan dalam model. Permissions dapat diterapkan pada model atau tindakan spesifik yang memungkinkan Django untuk menentukan apa yang dapat dilakukan oleh pengguna yang telah terautentikasi.
+
+**4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?** <br/>
 
 Django mengingat pengguna yang telah login melalui mekanisme **sessions** yang menggunakan **cookies**. Ketika pengguna login, Django menyimpan data sesi (termasuk informasi tentang pengguna yang telah diautentikasi) di server dan mengirimkan **cookie sesi** ke browser pengguna. Cookie ini berisi kunci unik (session ID) yang menghubungkan pengguna ke data sesi yang tersimpan di server. Setiap kali pengguna melakukan permintaan ke server, cookie ini dikirim kembali ke server untuk memastikan bahwa pengguna yang sama terus dikenali hingga mereka logout.
 
 Selain untuk login, cookies digunakan untuk berbagai tujuan lain, seperti **melacak preferensi pengguna**, **mengelola keranjang belanja** dalam aplikasi e-commerce, dan **mengumpulkan data analitik** untuk mengetahui perilaku pengguna. Cookies juga bisa digunakan untuk **menyimpan pengaturan** yang dipersonalisasi, seperti tema atau bahasa yang dipilih pengguna.
 
-Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dapat diambil dan dibaca oleh pihak ketiga (misalnya melalui serangan man-in-the-middle). Ada juga **cookies pihak ketiga**, yang sering digunakan untuk tujuan iklan atau pelacakan lintas situs, dan ini dapat menimbulkan kekhawatiran terkait privasi. Untuk memastikan keamanan, cookie harus diatur dengan opsi seperti **HttpOnly** (hanya bisa diakses oleh server, bukan JavaScript), **Secure** (hanya dikirimkan melalui koneksi HTTPS), dan **SameSite** (mencegah pengiriman cookie lintas situs yang tidak diinginkan).
+Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dapat diambil dan dibaca oleh pihak ketiga (misalnya melalui serangan man-in-the-middle). Ada juga **cookies pihak ketiga**, yang sering digunakan untuk tujuan iklan atau pelacakan lintas situs, dan ini dapat menimbulkan permasalahan dalam privasi. Untuk memastikan keamanan, cookie harus diatur dengan opsi seperti **HttpOnly** (hanya bisa diakses oleh server, bukan JavaScript), **Secure** (hanya dikirimkan melalui koneksi HTTPS), dan **SameSite** (mencegah pengiriman cookie lintas situs yang tidak diinginkan).
 
-**4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).** <br/>
+**5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).** <br/>
 
 **1. Membuat Fungsi dan Form Registrasi**
 
