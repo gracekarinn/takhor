@@ -312,7 +312,7 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
       response.delete_cookie('last_login')
       return response
   ```
-- Tambahkan ```last_login`` pada ```main.html```
+- Tambahkan ```last_login``` pada html yang diinginkan
 
 **6. Menghubungkan Model dengan User**
 
