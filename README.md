@@ -304,7 +304,7 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
     ...
   ```
 - Pada fungsi ```show_main```, tambahkan potongan kode ```'last_login': request.COOKIES['last_login']``` ke dalam variabel ```context```
-- Ubah fungsi ```logout_user`` dengan potongan kode berikut.
+- Ubah fungsi ```logout_user``` dengan potongan kode berikut.
   ```python
     def logout_user(request):
       logout(request)
