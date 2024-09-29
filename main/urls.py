@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from main.views import show_main, create_product_entry, show_xml, show_json, show_json_by_id, show_xml_by_id, register, login_user, logout_user
+from main.views import show_main, create_product_entry, show_xml, show_json, show_json_by_id, show_xml_by_id, register, login_user, logout_user, edit_product_entry, delete_product_entry
 
 app_name = 'main'
 
@@ -14,7 +14,9 @@ urlpatterns = [
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
-    path('logout/', logout_user, name='logout')
+    path('logout/', logout_user, name='logout'),
+    path('edit/<uuid:id>/', edit_product_entry, name='edit_product_entry'),
+    path('delete/<uuid:id>/', delete_product_entry, name='delete_product_entry'),
 ]
 
 if settings.DEBUG:
