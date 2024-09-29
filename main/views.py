@@ -1,6 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import ProductakhorModel
-from django.shortcuts import render, redirect
 from main.forms import ProductForm
 from django.http import HttpResponse
 from django.core import serializers
@@ -15,6 +14,7 @@ from django.urls import reverse
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
+    last_login = request.COOKIES.get('last_login')
     product_entries = ProductakhorModel.objects.filter(user=request.user)
 
     product = [
@@ -22,21 +22,21 @@ def show_main(request):
             "name": "Cake Chocolate",
             "price": 100,
             "description": "A delightfully squishy cake-shaped toy that's as soft as it is sweet.",
-            "image": "cake.jpg",
+            "image": "/images/kue.jpg",
             "quantity": 10
         },
         {
             "name": "Banana Squish",
             "price": 200,
             "description": "Go bananas for this fruity squishy!",
-            "image": "/banana.jpg",
+            "image": "/images/banana.jpg",
             "quantity": 20
         },
         {
             "name": "Cherry Squeezy",
             "price": 300,
             "description": "A cherry-licious squishy",
-            "image": "cherry.jpg",
+            "image": "/images/cherry.jpg",
             "quantity": 30
         }
     ]
@@ -48,7 +48,7 @@ def show_main(request):
         'shop': 'takhor',
         'product': product,
         'product_entries': product_entries,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': last_login
     }
 
     return render(request, "main.html", context)
@@ -66,6 +66,7 @@ def create_product_entry(request):
     
     context = {'form': form}
     return render(request, 'create_product_entry.html', context)
+
 def show_xml(request):
     product_entries = ProductakhorModel.objects.all()
     data = serializers.serialize('xml', product_entries)
@@ -88,7 +89,6 @@ def show_json_by_id(request, id):
 
 def register(request):
     form = UserCreationForm()
-
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -108,6 +108,8 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+      else:
+            messages.error(request, 'Invalid username or password.')
 
    else:
       form = AuthenticationForm(request)
@@ -119,3 +121,20 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product_entry(request, id):
+    product_entry = ProductakhorModel.objects.get(pk=id)
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product_entry)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_main')
+    else:
+        form = ProductForm(instance=product_entry)
+    context = {'form': form, 'product_entry': product_entry}
+    return render(request, 'edit_product_entry.html', context)
+
+def delete_product_entry(request, id):
+    product_entry = ProductakhorModel.objects.get(pk=id)
+    product_entry.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
