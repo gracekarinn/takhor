@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">Edit Product Entry</h1>
+    
+    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg p-8 max-w-md w-full">
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-white mb-1">
+                        {{ field.label }}
+                    </label>
+                    {% if field.field.widget.input_type == 'file' %}
+                        <input type="{{ field.field.widget.input_type }}"
+                               name="{{ field.name }}"
+                               id="{{ field.id_for_label }}"
+                               class="w-full p-2 bg-white border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                               accept="image/*">
+                    {% else %}
+                        {% if field.name == 'description' %}
+                            <textarea name="{{ field.name }}"
+                                      id="{{ field.id_for_label }}"
+                                      class="w-full p-2 h-32 rounded border border-gray-300 text-black">{{ field.value }}</textarea>
+                        {% else %}
+                            <input type="{{ field.field.widget.input_type }}"
+                                   name="{{ field.name }}"
+                                   id="{{ field.id_for_label }}"
+                                   value="{{ field.value }}"
+                                   class="w-full p-2 rounded border border-gray-300 text-black">
+                        {% endif %}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="mt-1 text-sm text-gray-400">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="mt-1 text-sm text-red-500">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            
+            <div class="flex items-center justify-between mt-6">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                    Save Changes
+                </button>
+                <a href="{% url 'main:show_main' %}" class="text-gray-400 hover:text-white transition-colors">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+ </div>
+</div>
+{% endblock %}
