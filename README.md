@@ -11,11 +11,11 @@ At **Takhor**, we specialize in bringing joy to your daily life with our unique,
 Curious?🤔 <br />
 Check our website [here](http://grace-karina31-takhor.pbp.cs.ui.ac.id) <br />
 
-## **Tugas 2 PBP 2024/2025**
-
 **Nama**: Grace Karina <br />
 **Kelas**: PBP F <br />
 **NPM**: 2306275834
+
+## **Tugas 2 PBP 2024/2025**
 
 **1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)?**
 
@@ -381,10 +381,116 @@ Namun, tidak semua cookies aman digunakan. **Cookies yang tidak dienkripsi** dap
 - Ubah value dari ```name``` pada context dalam ```show_main``` menjadi ``` 'name': request.user.username,```
 - Jangan lupa untuk membuat migrasi karena kita baru saja menambahkan atribut pada model.
   
+## **Tugas 5 PBP 2024/2025**
 
+**1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
 
+Berikut adalah urutan prioritas dari yang paling rendah hingga paling tinggi:
 
+1. **Elemen HTML (Tag selector)**  
+   Contoh: `div`, `p`, `h1`.  
+   Selector yang langsung menggunakan tag HTML memiliki prioritas paling rendah.
 
+2. **Class selector**  
+   Contoh: `.button`, `.container`.  
+   Selector berbasis class memiliki prioritas lebih tinggi dibandingkan selector tag.
 
+3. **Attribute selector, Pseudo-class**  
+   Contoh: `[type="text"]`, `:hover`, `:focus`.  
+   Selector ini setara dengan class dalam hal prioritas.
 
+4. **ID selector**  
+   Contoh: `#header`, `#main`.  
+   Selector ID memiliki prioritas lebih tinggi dibandingkan class dan tag.
 
+5. **Inline style**  
+   Contoh: `style="color: red;"` pada elemen HTML langsung.  
+   CSS yang ditulis langsung dalam atribut `style` pada elemen HTML memiliki prioritas lebih tinggi dibandingkan selector di stylesheet eksternal.
+
+6. **`!important`**  
+   Contoh: `color: blue !important;`.  
+   Aturan CSS yang menggunakan `!important` akan mengesampingkan semua aturan di atas, kecuali ada aturan lain yang juga menggunakan `!important` dan memiliki prioritas lebih tinggi (misalnya ID selector dengan `!important` akan lebih kuat daripada class selector dengan `!important`).
+
+**2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!**
+
+Responsive design menjadi konsep yang sangat penting dalam pengembangan aplikasi web karena mampu memastikan tampilan dan fungsionalitas situs web dapat menyesuaikan diri dengan berbagai ukuran layar dan perangkat, mulai dari desktop hingga ponsel. Dalam era digital saat ini, semakin banyak pengguna yang mengakses internet melalui perangkat mobile sehingga responsivitas memungkinkan pengalaman pengguna yang konsisten dan nyaman tanpa perlu melakukan scroll berlebihan atau memperbesar layar. Selain itu, responsive design juga berkontribusi pada SEO karena situs yang responsif lebih diutamakan oleh Google sehingga meningkatkan visibilitas. Kemudian, penggunaan responsive design mengurangi biaya pengembangan dan pemeliharaan karena developer hanya perlu membuat satu versi aplikasi yang kompatibel di berbagai perangkat. 
+
+### Contoh Aplikasi yang Sudah Menerapkan Responsive Design:
+1. Line
+2. Whatsapp
+3. Discord
+
+### Contoh Aplikasi yang Belum Menerapkan Responsive Design:
+1. Beberapa web pemerintah atau institusi publik
+2. Web berita lokal yang belum diperbaharui
+
+**3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!**
+
+### 1. **Margin**
+**Margin** merupakan ruang di luar elemen yang berfungsi untuk mengatur jarak elemen tersebut dari elemen lain di sekitarnya. Margin tidak terlihat dan tidak memiliki warna karena hanya menciptakan space outside of the box.
+
+- **Implementasi:**
+  ```css
+  .element {
+    margin: 13px; /* Memberikan margin 13px di semua sisi elemen */
+  }
+  ```
+
+  Margin juga dapat diterapkan pada setiap sisi elemen secara terpisah:
+  ```css
+  .element {
+    margin-top: 10px;    /* Margin bagian atas */
+    margin-right: 20px;  /* Margin bagian kanan */
+    margin-bottom: 15px; /* Margin bagian bawah */
+    margin-left: 5px;    /* Margin bagian kiri */
+  }
+  ```
+
+### 2. **Border**
+**Border** adalah garis yang mengelilingi elemen dan terletak di antara margin dan padding. Border dapat diatur dengan berbagai properti seperti ketebalan, warna, dan jenis garis (misalnya solid, dashed, atau dotted). Border bersifat terlihat dan biasanya digunakan untuk menandai batas suatu elemen.
+
+- **Implementasi:**
+  ```css
+  .element {
+    border: 2px solid black; /* Membuat border atau batasan berwarna hitam dengan ketebalan 2px dan style solid */
+  }
+  ```
+
+  Border juga dapat diterapkan secara spesifik pada setiap sisi elemen:
+  ```css
+  .element {
+    border-top: 1px dashed red;   /* Border bagian atas */
+    border-right: 3px solid blue; /* Border bagian kanan */
+    border-bottom: 2px dotted green; /* Border bagian bawah */
+    border-left: 4px double yellow;  /* Border bagian kiri */
+  }
+  ```
+
+### 3. **Padding**
+**Padding** adalah ruang di dalam elemen yang mengatur jarak antara konten elemen dan tepi elemen. Padding berada di dalam elemen dan dapat terlihat jika elemen memiliki warna latar belakang (background color) karena padding dianggap sebagai bagian dari elemen.
+
+- **Implementasi:**
+  ```css
+  .element {
+    padding: 15px; /* Memberikan padding 15px di semua sisi elemen */
+  }
+  ```
+
+  Padding juga dapat diatur untuk setiap sisi elemen:
+  ```css
+  .element {
+    padding-top: 10px;    /* Padding bagian atas */
+    padding-right: 20px;  /* Padding bagian kanan */
+    padding-bottom: 15px; /* Padding bagian bawah */
+    padding-left: 5px;    /* Padding bagian kiri */
+  }
+  ```
+Perlu di-_note_ bahwa pemakaian padding, margin, dan border dapat dilakukan sekaligus.
+
+**4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!**
+
+Flexbox adalah teknik dalam CSS yang memungkinkan kita mengatur elemen dalam satu dimensi, baik secara horizontal maupun vertikal. Dengan menggunakan flexbox, kita dapat mengontrol ukuran dan posisi elemen dengan lebih efisien. Contoh penggunaanya adalah ```flex-row```, elemen akan disusun secara horizontal dari kiri ke kanan. Selain itu, terdapat ```flex-col```, elemen akan disusun secara vertikal dari atas ke bawah. Dengan pengaturan ini, item-item dalam kontainer flex akan berada dalam satu kolom. Misalnya, jika kita ingin membuat daftar menu vertikal, kita bisa menggunakan flex-col untuk mengatur semua item menu dalam satu kolom, memberikan tampilan yang lebih terstruktur dan mudah diakses, terutama pada perangkat dengan layar kecil.
+
+Kemudian, Grid Layout adalah sistem tata letak yang memungkinkan kita mengatur elemen dalam baris dan kolom. Dengan grid, kita dapat menentukan ukuran dan posisi setiap elemen dengan lebih precise karena kita bisa menentukan sendiri mau berapa kolom atau baris, contohnya ```grid-cols-2``` dalam penulisan di tailwind. Dengan menggunakan ```grid-cols-2```, elemen yang berada di dalam kontainer grid akan secara otomatis ditempatkan dalam dua kolom. Misalnya, jika kita memiliki empat elemen, mereka akan dibagi menjadi dua baris, dengan dua elemen di setiap baris. Hal ini memungkinkan kita untuk menciptakan tampilan yang teratur dan rapi tanpa perlu menghitung secara manual di mana setiap elemen harus ditempatkan.
+
+**5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
