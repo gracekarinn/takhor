@@ -1,11 +1,58 @@
 <nav class="bg-gray-800 py-4">
   <div class="container mx-auto px-4 flex justify-between items-center">
     <a href="#" class="text-2xl font-bold text-blue-400">{{ shop }}</a>
-    <div class="space-x-4">
+    <div class="md:hidden">
+      <button id="menu-toggle" class="text-blue-400 focus:outline-none">
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden md:flex space-x-4 items-center">
       <a href="#" class="hover:text-blue-400">Home</a>
       <a href="#" class="hover:text-blue-400">Products</a>
       <a href="#" class="hover:text-blue-400">About</a>
       <a href="#" class="hover:text-blue-400">Contact</a>
+      <a
+        href="{% url 'main:logout' %}"
+        class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+      >
+        Logout
+      </a>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+    <div class="flex flex-col space-y-2 px-4 py-2">
+      <a href="#" class="block text-blue-400 hover:text-blue-400">Home</a>
+      <a href="#" class="block text-blue-400 hover:text-blue-400">Products</a>
+      <a href="#" class="block text-blue-400 hover:text-blue-400">About</a>
+      <a href="#" class="block text-blue-400 hover:text-blue-400">Contact</a>
+      <a
+        href="{% url 'main:logout' %}"
+        class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+      >
+        Logout
+      </a>
     </div>
   </div>
 </nav>
+
+<script>
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>
