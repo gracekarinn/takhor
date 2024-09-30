@@ -494,3 +494,144 @@ Flexbox adalah teknik dalam CSS yang memungkinkan kita mengatur elemen dalam sat
 Kemudian, Grid Layout adalah sistem tata letak yang memungkinkan kita mengatur elemen dalam baris dan kolom. Dengan grid, kita dapat menentukan ukuran dan posisi setiap elemen dengan lebih precise karena kita bisa menentukan sendiri mau berapa kolom atau baris, contohnya ```grid-cols-2``` dalam penulisan di tailwind. Dengan menggunakan ```grid-cols-2```, elemen yang berada di dalam kontainer grid akan secara otomatis ditempatkan dalam dua kolom. Misalnya, jika kita memiliki empat elemen, mereka akan dibagi menjadi dua baris, dengan dua elemen di setiap baris. Hal ini memungkinkan kita untuk menciptakan tampilan yang teratur dan rapi tanpa perlu menghitung secara manual di mana setiap elemen harus ditempatkan.
 
 **5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
+
+**Menambahkan Tailwind ke Aplikasi**
+
+- Menambahkan tailwind di ```base.html```
+  ```html
+    <head>
+      {% block meta %}
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+      {% endblock meta %}
+      <script src="https://cdn.tailwindcss.com">
+      </script>
+    </head>
+  ```
+
+**Menambahkan Fitur Edit Product pada Aplikasi**
+- Tambahkan ```edit_product_entry``` pada ```views.py```
+  ```python
+  def edit_product_entry(request, id):
+    product_entry = ProductakhorModel.objects.get(pk=id)
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product_entry)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_main')
+    else:
+        form = ProductForm(instance=product_entry)
+    context = {'form': form, 'product_entry': product_entry}
+    return render(request, 'edit_product_entry.html', context)
+  ```
+- Kemudian, tambahkan fungsi ini pada ```urls.py``` pada main
+  ```python
+    ...
+    path('edit-mood/<uuid:id>', edit_mood, name='edit_mood'),
+    ...
+  ```
+- Untuk menambahkan dan memperindah UI, mari kita membuat file dan tambahkan styling pada ```edit_product_entry.html```
+  ```html
+    {% extends 'base.html' %}
+    {% load static %}
+    
+    {% block content %}
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">Edit Product Entry</h1>
+        
+        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg p-8 max-w-md w-full">
+            <form method="POST" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-white mb-1">
+                            {{ field.label }}
+                        </label>
+                        {% if field.field.widget.input_type == 'file' %}
+                            <input type="{{ field.field.widget.input_type }}"
+                                   name="{{ field.name }}"
+                                   id="{{ field.id_for_label }}"
+                                   class="w-full p-2 bg-white border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                                   accept="image/*">
+                        {% else %}
+                            {% if field.name == 'description' %}
+                                <textarea name="{{ field.name }}"
+                                          id="{{ field.id_for_label }}"
+                                          class="w-full p-2 h-32 rounded border border-gray-300 text-black">{{ field.value }}</textarea>
+                            {% else %}
+                                <input type="{{ field.field.widget.input_type }}"
+                                       name="{{ field.name }}"
+                                       id="{{ field.id_for_label }}"
+                                       value="{{ field.value }}"
+                                       class="w-full p-2 rounded border border-gray-300 text-black">
+                            {% endif %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <p class="mt-1 text-sm text-gray-400">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="mt-1 text-sm text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                
+                <div class="flex items-center justify-between mt-6">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                        Save Changes
+                    </button>
+                    <a href="{% url 'main:show_main' %}" class="text-gray-400 hover:text-white transition-colors">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+     </div>
+   </div>
+  {% endblock %}
+  ```
+**Menambahkan fitur delete pada product**
+
+- Tambahkan ```delete_product_entry``` pada ```views.py```
+  ```python
+  def delete_product_entry(request, id):
+    product_entry = ProductakhorModel.objects.get(pk=id)
+    product_entry.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+  ```
+- Kemudian, tambahkan fungsi ini pada ```urls.py``` pada main
+  ```python
+    ...
+      path('delete/<uuid:id>', delete_mood, name='delete_mood'),
+    ...
+  ```
+- Tambahkan kode pada ```main.html`` agar button untuk delete dan edit tersedia
+  ```html
+  <div class="mt-4 flex justify-between">
+   <a href="{% url 'main:edit_product_entry' product_entry.id %}" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors flex-grow mr-2">
+     <button>Edit</button>
+   </a>
+   <a href="{% url 'main:delete_product_entry' product_entry.id %}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors flex-grow ml-2" onclick="return confirm('Are you sure you want to delete this product?');">
+     <button>Delete</button>
+   </a>
+  </div>
+
+**Membuat UI login, register, tambah product, edit product, card untuk product, navbar, dan footer jadi bagus**
+
+Pada proyek ini, saya menggunakan *flexbox* dan *grid* sebagai metode *layout* utama yang diterapkan di berkas yang terletak di direktori `main/templates`. Kedua metode ini memberikan kontrol yang presisi terhadap posisi elemen-elemen di dalam halaman, memastikan bahwa tata letak sesuai dengan desain yang diinginkan.
+
+Untuk latar belakang (*background*), saya menerapkan kelas Tailwind CSS `bg-gray-900`, yang memberikan warna abu-abu gelap (#1a202c).
+
+Kemudian, pada halaman `login.html` dan `register.html`, saya melakukan *styling* khusus untuk elemen-elemen formulir, terutama pada *input* elemen berdasarkan nama (*name attribute*) dari masing-masing *input*. Penyesuaian ini memastikan bahwa setiap elemen memiliki tampilan yang berbeda dari gaya default dan sesuai dengan kebutuhan fungsional dan estetika aplikasi.
+
+Selain itu, saya menambahkan fitur animasi di `main.html`, di mana ketika sebuah elemen diklik, elemen tersebut akan membesar. Fitur ini menggunakan kelas Tailwind CSS `transition-transform` dengan durasi transisi `duration-300`, yang membuat efek pembesaran terjadi secara halus selama 300 milidetik. 
+
+Pada bagian *navbar* (*navigation bar*), saya menerapkan desain responsif untuk memastikan tampilan yang optimal di berbagai ukuran layar. Untuk mencapai ini, saya menggunakan konsep *hamburger menu*, yang muncul ketika tampilan diakses melalui perangkat dengan layar kecil, seperti ponsel atau tablet.
+
+Penggunaan kelas `md:hidden` dari Tailwind CSS memungkinkan *hamburger menu* ini hanya terlihat pada layar berukuran kecil hingga menengah (di bawah *breakpoint* layar medium atau `md`). Ketika layar mencapai ukuran yang lebih besar (seperti desktop), *hamburger menu* akan tersembunyi dan menu navigasi standar akan ditampilkan.
+
+
+      
+
+  
+
