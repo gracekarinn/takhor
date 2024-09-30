@@ -1,58 +1,53 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Login</title>
+<title>Register</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900">
-  <h1 class="text-3xl font-bold text-center text-white mb-6">Login</h1>
-
-  <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg p-8 max-w-md w-full">
-    <form method="POST" action="" class="space-y-4">
-      {% csrf_token %}
-      
-      <div class="mt-4">
-        <label for="username" class="mb-2 font-semibold text-white">Username</label>
-        <input type="text" name="username" class="w-full p-2 rounded border border-gray-300 text-black" />
-        {% if form.username.errors %}
-          <ul class="text-red-500 mt-1">
-            {% for error in form.username.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
+<div class="bg-gray-900">
+  <div class="flex flex-col items-center justify-center min-h-screen w-screen p-10">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-white mb-6">Login</h1>
+      <div class="w-full max-w-md sm:x-2 mx-auto p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl">
+          <form method="POST" action="" class="space-y-4">
+              {% csrf_token %}
+              <div>
+                  <label for="username" class="block mb-1 text-sm font-medium text-white">Username</label>
+                  <input type="text" name="username" class="w-full p-2 rounded border border-gray-300 text-black text-sm" />
+                  {% if form.username.errors %}
+                  <ul class="text-red-500 mt-1 text-xs">
+                      {% for error in form.username.errors %}
+                      <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+              </div>
+              <div>
+                  <label for="password" class="block mb-1 text-sm font-medium text-white">Password</label>
+                  <input type="password" name="password" class="w-full p-2 rounded border border-gray-300 text-black text-sm" />
+                  {% if form.password.errors %}
+                  <ul class="text-red-500 mt-1 text-xs">
+                      {% for error in form.password.errors %}
+                      <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+              </div>
+              <div>
+                  <input type="submit" value="Login" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-sm transition duration-300 cursor-pointer" />
+              </div>
+          </form>
+          {% if messages %}
+          <ul class="mt-4 w-full">
+              {% for message in messages %}
+              <li class="text-red-500 text-center text-sm">{{ message }}</li>
+              {% endfor %}
           </ul>
-        {% endif %}
+          {% endif %}
+          <div class="mt-6 text-center text-white">
+              <p class="text-xs inline">Don't have an account yet? <a href="{% url 'main:register' %}" class="text-blue-400 hover:underline text-xs">Register</a></p>
+          </div>
       </div>
-
-      <div class="mt-4">
-        <label for="password" class="mb-2 font-semibold text-white">Password</label>
-        <input type="password" name="password" class="w-full p-2 rounded border border-gray-300 text-black" />
-        {% if form.password.errors %}
-          <ul class="text-red-500 mt-1">
-            {% for error in form.password.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div>
-        <input type="submit" value="Login" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded transition duration-300 cursor-pointer" />
-      </div>
-    </form>
-
-    {% if messages %}
-    <ul class="mt-4">
-      {% for message in messages %}
-      <li class="text-red-500">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-
-    <div class="mt-6 text-center text-white">
-      Don't have an account yet? 
-      <a href="{% url 'main:register' %}" class="text-blue-400 hover:underline">Register Now</a>
-    </div>
   </div>
 </div>
 {% endblock content %}
