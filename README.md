@@ -622,7 +622,7 @@ Pada proyek ini, saya menggunakan *flexbox* dan *grid* sebagai metode *layout* u
 
 Untuk latar belakang (*background*), saya menerapkan kelas Tailwind CSS `bg-gray-900`, yang memberikan warna abu-abu gelap (#1a202c).
 
-Kemudian, pada halaman `login.html` dan `register.html`, saya melakukan *styling* khusus untuk elemen-elemen formulir, terutama pada *input* elemen berdasarkan nama (*name attribute*) dari masing-masing *input*. Penyesuaian ini memastikan bahwa setiap elemen memiliki tampilan yang berbeda dari gaya default dan sesuai dengan kebutuhan fungsional dan estetika aplikasi.
+Kemudian, pada halaman `login.html` dan `register.html`, saya melakukan *styling* khusus untuk elemen-elemen formulir, terutama pada *input* elemen berdasarkan nama (*name attribute*) dari masing-masing *input*. Penyesuaian ini memastikan bahwa setiap elemen memiliki tampilan yang berbeda dari styling default dan sesuai dengan kebutuhan fungsional dan estetika aplikasi.
 
 Selain itu, saya menambahkan fitur animasi di `main.html`, di mana ketika sebuah elemen diklik, elemen tersebut akan membesar. Fitur ini menggunakan kelas Tailwind CSS `transition-transform` dengan durasi transisi `duration-300`, yang membuat efek pembesaran terjadi secara halus selama 300 milidetik. 
 
