@@ -630,8 +630,21 @@ Pada bagian *navbar* (*navigation bar*), saya menerapkan desain responsif untuk 
 
 Penggunaan kelas `md:hidden` dari Tailwind CSS memungkinkan *hamburger menu* ini hanya terlihat pada layar berukuran kecil hingga menengah (di bawah *breakpoint* layar medium atau `md`). Ketika layar mencapai ukuran yang lebih besar (seperti desktop), *hamburger menu* akan tersembunyi dan menu navigasi standar akan ditampilkan.
 
+## **Tugas 6 PBP 2024/2025**
 
-      
+**1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!**
 
-  
+JavaScript memainkan peran penting dalam pengembangan aplikasi web modern dan memberikan berbagai manfaat yang meningkatkan interaktivitas dan fungsionalitas situs web. Sebagai bahasa pemrograman sisi client, JavaScript memungkinkan developer untuk menciptakan pengalaman pengguna yang dinamis dan responsif. Dengan JavaScript, elemen halaman web dapat dimanipulasi secara real-time yan memungkinkan pembaruan konten tanpa perlu memuat ulang seluruh halaman. Hal ini tidak hanya meningkatkan kecepatan dan efisiensi aplikasi web, tetapi juga memberikan pengalaman yang lebih mulus bagi pengguna. JavaScript juga memungkinkan validasi form di sisi klien agar mengurangi beban server. Selain itu, JavaScript mendukung pengembangan aplikasi web yang kompleks dengan bantuan berbagai framework dan library seperti React, Angular, dan Vue.js yang mempercepat proses pengembangan dan memudahkan pemeliharaan kode. Kemampuan JavaScript untuk berinteraksi dengan API dan mengelola data asinkron juga membuka peluang untuk menciptakan fitur dalam aplikasi web.
+
+**2. Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?**
+
+Dalam pengembangan aplikasi web modern dengan JavaScript, penggunaan `await` bersama dengan `fetch()` memainkan peran penting dalam penanganan operasi asinkron. Kata kunci `await` berfungsi untuk menunda eksekusi kode hingga Promise yang dikembalikan oleh `fetch()` terselesaikan, memungkinkan pengembang untuk menulis kode asinkron yang terlihat dan berjalan secara sekuensial. Hal ini sangat bermanfaat dalam meningkatkan keterbacaan dan pemeliharaan kode, terutama ketika berhadapan dengan multiple request API atau operasi asinkron yang saling bergantung. Tanpa menggunakan `await`, `fetch()` akan mengembalikan Promise yang belum terselesaikan, yang mengharuskan penggunaan metode `.then()` untuk menangani hasilnya. Pendekatan ini dapat mengakibatkan kode yang lebih sulit dibaca dan dipelihara, terutama dalam skenario yang kompleks. Lebih jauh lagi, tidak menggunakan `await` dapat menyebabkan kesalahan jika kode mencoba mengakses data yang belum tersedia dari respons server. Dengan memanfaatkan `await`, pengembang dapat dengan mudah menangani error menggunakan blok try-catch, meningkatkan robustness aplikasi. Penggunaan `await` dengan `fetch()` juga memfasilitasi penulisan kode yang lebih bersih dan intuitif, dan memungkinkan developer untuk fokus pada logika bisnis daripada pengelolaan callback atau promise chaining yang rumit.
+
+**3. Mengapa kita perlu menggunakan decorator `csrf_exempt` pada view yang akan digunakan untuk AJAX `POST?`**
+
+Secara default, Django mengimplementasikan perlindungan Cross-Site Request Forgery (CSRF) untuk semua view yang menerima POST request. Perlindungan ini mengharuskan setiap POST request menyertakan token CSRF yang valid, yang biasanya disertakan dalam form HTML melalui tag {% csrf_token %}. Namun, dalam konteks AJAX POST request, terutama yang berasal dari domain yang berbeda atau aplikasi single-page, menyertakan token CSRF bisa menjadi tantangan. Hal ini karena AJAX request sering kali dibuat secara dinamis tanpa me-refresh halaman, sehingga tidak memiliki akses langsung ke token CSRF yang di-generate oleh server. Dengan menggunakan decorator `csrf_exempt`, kita memberi tahu Django untuk tidak memeriksa token CSRF untuk view tertentu. Ini memungkinkan AJAX POST request untuk diproses tanpa perlu menyertakan token CSRF.  Dalam beberapa kasus, penggunaan `csrf_exempt` mungkin diperlukan untuk API endpoint tertentu, tetapi harus selalu diimbangi dengan mekanisme keamanan tambahan untuk melindungi aplikasi dari serangan CSRF.
+
+**4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?**
+
+
 
