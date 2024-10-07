@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import ProductakhorModel
 from main.forms import ProductForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
@@ -10,12 +10,13 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
     last_login = request.COOKIES.get('last_login')
-    product_entries = ProductakhorModel.objects.filter(user=request.user)
 
     product = [
         {
@@ -47,7 +48,6 @@ def show_main(request):
         'class' : 'PBP F',
         'shop': 'takhor',
         'product': product,
-        'product_entries': product_entries,
         'last_login': last_login
     }
 
@@ -68,12 +68,12 @@ def create_product_entry(request):
     return render(request, 'create_product_entry.html', context)
 
 def show_xml(request):
-    product_entries = ProductakhorModel.objects.all()
+    product_entries = ProductakhorModel.objects.filter(user=request.user)
     data = serializers.serialize('xml', product_entries)
     return HttpResponse(data, content_type='application/xml')
 
 def show_json(request):
-    product_entries = ProductakhorModel.objects.all()
+    product_entries = ProductakhorModel.objects.filter(user=request.user)
     data = serializers.serialize('json', product_entries)
     return HttpResponse(data, content_type='application/json')
 
@@ -138,3 +138,18 @@ def delete_product_entry(request, id):
     product_entry = ProductakhorModel.objects.get(pk=id)
     product_entry.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def create_product_entry_ajax(request):
+    name = request.POST.get('name');
+    price = request.POST.get('price');
+    description = request.POST.get('description');
+    quantity = request.POST.get('quantity');
+    image = request.FILES.get('image');
+    user = request.user
+    
+    new_product = ProductForm(name=name, price=price, description=description, quantity=quantity, image=image, user=user)
+    new_product.save()
+
+    return HttpResponse(B'Created', status=201)
