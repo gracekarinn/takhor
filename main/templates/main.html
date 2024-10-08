@@ -338,15 +338,12 @@
         .addEventListener("click", hideModal);
 
       function addProductEntry() {
-        const form = document.getElementById("isiProductForm");
+        const form = document.querySelector("#isiProductForm");
         const formData = new FormData(form);
 
         fetch("{% url 'main:create_ajax' %}", {
           method: "POST",
           body: formData,
-          headers: {
-            "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
-          },
         })
           .then((response) => {
             if (!response.ok) {
@@ -367,7 +364,7 @@
       }
 
       document
-        .getElementById("isiProductForm")
+        .querySelector("#isiProductForm")
         .addEventListener("submit", (e) => {
           e.preventDefault();
           addProductEntry();
