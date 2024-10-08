@@ -17,7 +17,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('edit/<uuid:id>/', edit_product_entry, name='edit_product_entry'),
     path('delete/<uuid:id>/', delete_product_entry, name='delete_product_entry'),
-    path('create-product-entry-ajax/', create_product_entry_ajax, name='create_ajax'),
+    path('create_ajax/', create_product_entry_ajax, name='create_ajax'),
 ]
 
 if settings.DEBUG:
