@@ -646,5 +646,389 @@ Secara default, Django mengimplementasikan perlindungan Cross-Site Request Forge
 
 **4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?**
 
+Pertama, keamanan frontend bisa dimanipulasi oleh pengguna sehingga pembersihan hanya di frontend tidak menjamin data yang masuk ke server sudah bersih dan aman. Kedua, backend bisa memastikan semua data yang masuk ke database sudah melalui proses pembersihan yang sama, terlepas dari sumber inputnya. Ketiga, serangan injection dapat terjadi jika data tidak terintegerasi di backend. 
+
+**5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
+
+- Menambahkan import pada ```views.py```
+  ```python
+  from django.views.decorators.csrf import csrf_exempt
+  from django.views.decorators.http import require_POST
+  ```
+- Menambahkan fungsi baru pada ```views,py```
+  ```python
+  @csrf_exempt
+  @require_POST
+  def create_product_entry_ajax(request):
+      name = request.POST.get('name');
+      price = request.POST.get('price')
+      description = request.POST.get('description')
+      quantity = request.POST.get('quantity')
+      image = request.FILES.get('image')
+      user = request.user
+  
+      try:
+          new_product = ProductakhorModel(
+              name=name,
+              price=price,
+              description=description,
+              quantity=quantity,
+              image=image,
+              user=user
+          )
+          new_product.save()
+          return HttpResponse(b"CREATED", status=201)
+      except Exception as e:
+          return HttpResponse(str(e).encode('utf-8'), status=400)
+  ```
+- Jangan lupa untuk menambah route ke ```urls.py```
+  ```python
+  urlpatterns = [
+    ...
+    path('create_ajax/', create_product_entry_ajax, name='create_ajax'),
+  ]
+  ```
+- Untuk menghubungkan ```create_ajax```, kita membuat fungsi dalam ```<script></script>```
+  ```python
+    function addProductEntry() {
+        const form = document.querySelector("#isiProductForm");
+        const formData = new FormData(form);
+
+        fetch("{% url 'main:create_ajax' %}", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text();
+          })
+          .then(() => {
+            refreshProductEntries();
+            form.reset();
+            document.querySelector("#ProductModal").classList.add("hidden");
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        return false;
+      }
+
+      document
+        .querySelector("#isiProductForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          addProductEntry();
+        });
+  ```
+- Untuk ```create_ajax```, kita akan membuat modal. Pertama-tama kita membuat button dan modal. Kemudian, kita menambahkan logic showModal dan closeModal dengan JS.
+  ```html
+    <button
+        data-modal-target="ProductModal"
+        data-modal-toggle="ProductModal"
+        class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+        onclick="showModal();"
+      >
+        Add Product by AJAX
+      </button>
+      <div
+        id="ProductModal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"
+      >
+        <div
+          id="crudModalContent"
+          class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"
+        >
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Add New Product Entry
+            </h3>
+            <button
+              type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+              id="closeModalBtn"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="px-6 py-4 space-y-6">
+            <form id="isiProductForm">
+              <div class="mb-4">
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="mt-1 text-black block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                  placeholder="Enter product name"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="description"
+                  class="block text-sm font-medium text-gray-700"
+                  >Description</label
+                >
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="3"
+                  class="mt-1 block w-full h-52 resize-none text-black border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                  placeholder="Put your product description here"
+                  required
+                ></textarea>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="quantity"
+                  class="block text-sm font-medium text-gray-700"
+                  >Quantity</label
+                >
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  class="mt-1 block w-full border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                  placeholder="Enter quantity"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="price"
+                  class="block text-sm font-medium text-gray-700"
+                  >Price</label
+                >
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  class="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-indigo-700"
+                  placeholder="Enter price"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="image"
+                  class="block text-sm font-medium text-gray-700"
+                  >Image</label
+                >
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  class="mt-1 block w-full border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                  accept="image/*"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <!-- Modal footer -->
+          <div
+            class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end"
+          >
+            <button
+              type="button"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
+              id="cancelButton"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              id="submitProductEntry"
+              form="isiProductForm"
+              class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+  ```
+  Logic untuk Modal
+  ```javascript
+   const modal = document.getElementById("ProductModal");
+   const modalContent = document.getElementById("crudModalContent");
+   function showModal() {
+        const modal = document.getElementById("ProductModal");
+        const modalContent = document.getElementById("crudModalContent");
+
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modalContent.classList.remove("opacity-0", "scale-95");
+          modalContent.classList.add("opacity-100", "scale-100");
+        }, 50);
+      }
+
+      function hideModal() {
+        const modal = document.getElementById("ProductModal");
+        const modalContent = document.getElementById("crudModalContent");
+
+        modalContent.classList.remove("opacity-100", "scale-100");
+        modalContent.classList.add("opacity-0", "scale-95");
+
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 150);
+      }
+
+      document
+        .getElementById("cancelButton")
+        .addEventListener("click", hideModal);
+      document
+        .getElementById("closeModalBtn")
+        .addEventListener("click", hideModal);
+  ```
+- Untuk pengguna tidak harus refresh untuk melihat produk baru, kita dapat menambahkan logic seperti ini di ```main.html```
+  
+  ```javascript
+    async function refreshProductEntries() {
+        getProductEntries()
+          .then((data) => {
+            const container = document.getElementById("product-entries");
+            container.innerHTML = "";
+
+            if (data.length === 0) {
+              displayEmptyMessage(container);
+            } else {
+              data.forEach((entry) => {
+                const productCard = createProductCard(entry);
+                container.innerHTML += productCard;
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            displayErrorMessage(
+              "Failed to load product entries. Please try again later."
+            );
+          });
+      }
+  ```
+- Untuk mengubah cards data mood agar dapat mendukung AJAX GET dan pengambilan data mood menggunakan AJAX GET.
+  ```javascript
+   async function getProductEntries() {
+          return fetch("{% url 'main:show_json' %}").then((res) => res.json());
+        }
+        getProductEntries();
+        async function refreshProductEntries() {
+          getProductEntries()
+            .then((data) => {
+              const container = document.getElementById("product-entries");
+              container.innerHTML = "";
+  
+              if (data.length === 0) {
+                displayEmptyMessage(container);
+              } else {
+                data.forEach((entry) => {
+                  const productCard = createProductCard(entry);
+                  container.innerHTML += productCard;
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              displayErrorMessage(
+                "Failed to load product entries. Please try again later."
+              );
+            });
+        }
+  
+        function displayEmptyMessage(container) {
+          container.innerHTML = `
+            <div class="mt-10 col-span-full">
+              <img src="{% static '/images/sedih_banget.png' %}" alt="kucing melet" class="mx-auto h-52 w-52 mt-4" />
+              <p class="text-center mt-10 text-2xl text-red-400">Tambahin squishy lagi dong biar makin laku</p>
+            </div>
+          `;
+        }
+  
+        function displayErrorMessage(message) {
+          const container = document.getElementById("product-entries");
+          container.innerHTML = `
+            <div class="mt-10 col-span-full">
+              <p class="text-center mt-10 text-2xl text-red-400">${message}</p>
+            </div>
+          `;
+        }
+  
+        function createProductCard(entry) {
+          return `
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+              <img
+                src="media/${entry.fields.image}"
+                alt="${entry.fields.name}"
+                class="w-full md:h-54 h-48 object-cover"
+              />
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2 text-blue-300">
+                  ${entry.fields.name}
+                </h3>
+                <p class="text-gray-400 mb-4">${entry.fields.description}</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-lg font-semibold text-purple-300">
+                    $${entry.fields.price}
+                  </span>
+                  <span
+                  class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm"
+                  >Qty: ${entry.fields.quantity}</span>
+                </div>
+               <div class="mt-4 flex justify-between">
+                  <a href="/edit/${entry.pk}/" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors flex-grow mr-2">
+                    <button>Edit</button>
+                  </a>
+                  <a href="/delete/${entry.pk}/" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors flex-grow ml-2" onclick="return confirm('Are you sure you want to delete this product?');">
+                    <button>Delete</button>
+                  </a>
+                </div>
+                <button
+                  class="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          `;
+        }
+        refreshProductEntries();
+    ```
+- Jangan lupa untuk delete kode seputar add karena udah ada logic add di <script></script>
+
+
+  
+
+  
+
+
 
 
