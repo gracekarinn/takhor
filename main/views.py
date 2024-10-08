@@ -143,13 +143,22 @@ def delete_product_entry(request, id):
 @require_POST
 def create_product_entry_ajax(request):
     name = request.POST.get('name');
-    price = request.POST.get('price');
-    description = request.POST.get('description');
-    quantity = request.POST.get('quantity');
-    image = request.FILES.get('image');
+    price = request.POST.get('price')
+    description = request.POST.get('description')
+    quantity = request.POST.get('quantity')
+    image = request.FILES.get('image')
     user = request.user
-    
-    new_product = ProductForm(name=name, price=price, description=description, quantity=quantity, image=image, user=user)
-    new_product.save()
 
-    return HttpResponse(B'Created', status=201)
+    try:
+        new_product = ProductakhorModel(
+            name=name,
+            price=price,
+            description=description,
+            quantity=quantity,
+            image=image,
+            user=user
+        )
+        new_product.save()
+        return HttpResponse(b"CREATED", status=201)
+    except Exception as e:
+        return HttpResponse(str(e).encode('utf-8'), status=400)
