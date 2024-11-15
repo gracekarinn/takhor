@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from main.views import show_main, create_product_entry, show_xml, show_json, show_json_by_id, show_xml_by_id, register, login_user, logout_user, edit_product_entry, delete_product_entry, create_product_entry_ajax
+from main.views import show_main, create_product_entry, show_xml, show_json, show_json_by_id, show_xml_by_id, register, login_user, logout_user, edit_product_entry, delete_product_entry, create_product_entry_ajax, create_product_flutter
 
 app_name = 'main'
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('edit/<uuid:id>/', edit_product_entry, name='edit_product_entry'),
     path('delete/<uuid:id>/', delete_product_entry, name='delete_product_entry'),
     path('create_ajax/', create_product_entry_ajax, name='create_ajax'),
+    path('create-flutter/', create_product_flutter, name='create_product_flutter'),
 ]
 
 if settings.DEBUG:
