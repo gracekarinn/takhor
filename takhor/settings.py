@@ -148,4 +148,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
  
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "grace-karina31-takhor.pbp.cs.ui.ac.id"]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://grace-karina31-takhor.pbp.cs.ui.ac.id", "https://grace-karina31-takhor.pbp.cs.ui.ac.id>"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://grace-karina31-takhor.pbp.cs.ui.ac.id", "https://grace-karina31-takhor.pbp.cs.ui.ac.id"]
