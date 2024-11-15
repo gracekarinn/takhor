@@ -11,3 +11,4 @@ class ProductakhorModel(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='images/')
     quantity = models.IntegerField()
+
